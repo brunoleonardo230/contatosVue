@@ -43,13 +43,13 @@
                 
                 <div class="contact">
                         
-                    <div class="col-12 mb-2">
+                    <div class="col-12 mb-2" v-for="contact in contacts">
 
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Fulano de Tal</h5>
+                                <h5 class="card-title">{{contact.name}}</h5>
 
-                                <p class="card-text">fulano@email.com, 9888434343</p>
+                                <p class="card-text">{{contact.email}}, {{contact.phone}}</p>
 
                                 <a href="#" class="btn btn-sm btn-primary">EDITAR</a>
                                 <a href="#" class="btn btn-sm btn-danger">DELETAR</a>
@@ -67,6 +67,7 @@
         let app = new Vue({
             el: "#app",
             data: {
+                contacts: [],
                 name: 'Contatos APP',
                 contact: {
                     id: '',
@@ -74,6 +75,9 @@
                     email: '',
                     phone: ''
                 }
+            },
+            created() {
+                this.contacts = JSON.parse(localStorage.getItem('contactsApp'));
             },
             methods: {
                 saveContact(contact) {
@@ -89,7 +93,9 @@
                         contacts = ['contact'];
                     }
 
-                        localStorage.setItem('contactsApp', JSON.stringify(contacts));
+                    this.contacts = contacts;
+
+                    localStorage.setItem('contactsApp', JSON.stringify(contacts));
 
                 }
             }
